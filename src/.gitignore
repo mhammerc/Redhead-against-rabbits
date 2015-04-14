@@ -1,0 +1,5 @@
+*.autosave
+*.o
+Makefile
+*.pro.user
+Manon
