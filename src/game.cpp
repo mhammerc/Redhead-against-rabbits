@@ -12,13 +12,21 @@ Game::Game() :
 {
     mWindow.setFramerateLimit(60);
 
-    if(!mTexture.loadFromFile("Media/Textures/Eagle.png"))
+    try
     {
-
+        textures.load(Textures::Landscape, "Media/Textures/Desert.png");
+        textures.load(Textures::Airplaine, "Media/Textures/Eagle.png");
+    }
+    catch (std::runtime_error& e)
+    {
+        std::cout << "Exception: " << e.what() << std::endl;
+        return;
     }
 
-    mPlayer.setTexture(mTexture);
+    mPlayer.setTexture(textures.get(Textures::Airplaine));
     mPlayer.setPosition(100.f, 100.f);
+
+    mLandscape.setTexture(textures.get(Textures::Landscape));
 
     mFont.loadFromFile("Media/Sansation.ttf");
     mStatisticsText.setFont(mFont);
@@ -89,6 +97,7 @@ void Game::update(sf::Time elapsedTime)
 void Game::render()
 {
     mWindow.clear();
+    mWindow.draw(mLandscape);
     mWindow.draw(mPlayer);
     mWindow.draw(mStatisticsText);
     mWindow.display();
@@ -112,8 +121,6 @@ void Game::updateStatistics(sf::Time elapsedTime)
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-    std::cout << key << std::endl;
-
     if (key == sf::Keyboard::Z)
         mIsMovingUp = isPressed;
     else if (key == sf::Keyboard::S)

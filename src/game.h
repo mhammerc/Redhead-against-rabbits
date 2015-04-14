@@ -6,6 +6,17 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "resourceholder.h"
+
+
+namespace Textures
+{
+    enum ID
+    {
+        Landscape,
+        Airplaine
+    };
+}
 
 class Game
 {
@@ -26,9 +37,11 @@ private:
     static const float PlayerSpeed;
     static const sf::Time TimePerFrame;
 
+    ResourceHolder<sf::Texture, Textures::ID> textures;
+
     sf::RenderWindow mWindow;
-    sf::Texture mTexture;
     sf::Sprite mPlayer;
+    sf::Sprite mLandscape;
     sf::Font mFont;
     sf::Text mStatisticsText;
     sf::Time mStatisticsUpdateTime;
