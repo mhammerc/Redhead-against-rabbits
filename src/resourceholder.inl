@@ -27,11 +27,18 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
     insertResource(id, std::move(resource));
 }
 
+template <typename Resource, typename Identifier>
+Resource& ResourceHolder<Resource, Identifier>::get(Identifier id)
+{
+    auto found = mResourceMap.find(id);
+    assert(found != mResourceMap.end());
+
+    return *found->second;
+}
+
 /*template <typename Resource, typename Identifier>
 const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
 {
-    //std::map<Identifier, std::unique_ptr<Resource>>::iterator found;
-
     auto found = mResourceMap.find(id);
     assert(found != mResourceMap.end());
 
@@ -39,21 +46,9 @@ const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
 }*/
 
 template <typename Resource, typename Identifier>
-const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
-{
-    //std::map<Identifier, std::unique_ptr<Resource>>::iterator found;
-
-    auto found = mResourceMap.find(id);
-    assert(found != mResourceMap.end());
-
-    return *found->second;
-}
-
-template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::insertResource(Identifier id, std::unique_ptr<Resource> resource)
 {
     // Insert and check success
-    //std::pair<std::map<Identifier, std::unique_ptr<Resource>>::iterator, bool> inserted;
     auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
     assert(inserted.second);
 }

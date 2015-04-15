@@ -4,21 +4,13 @@
 #include <string>
 #include <iostream>
 
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "resourceholder.h"
+#include "world.h"
 
-
-namespace Textures
-{
-    enum ID
-    {
-        Landscape,
-        Airplaine
-    };
-}
-
-class Game
+class Game : private sf::NonCopyable
 {
 public:
     Game();
@@ -34,23 +26,15 @@ private:
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
 private:
-    static const float PlayerSpeed;
     static const sf::Time TimePerFrame;
 
-    ResourceHolder<sf::Texture, Textures::ID> textures;
-
     sf::RenderWindow mWindow;
-    sf::Sprite mPlayer;
-    sf::Sprite mLandscape;
+    World mWorld;
+
     sf::Font mFont;
     sf::Text mStatisticsText;
     sf::Time mStatisticsUpdateTime;
-
     std::size_t mStatisticsNumFrames;
-    bool mIsMovingUp;
-    bool mIsMovingDown;
-    bool mIsMovingRight;
-    bool mIsMovingLeft;
 };
 
 #endif // GAME_H

@@ -1,32 +1,16 @@
 #include "game.h"
 
-const float Game::PlayerSpeed = 100.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game() :
     mWindow(sf::VideoMode(640,480), "Readhead against rabbits", sf::Style::Close),
-    mIsMovingUp(false),
-    mIsMovingDown(false),
-    mIsMovingRight(false),
-    mIsMovingLeft(false)
+    mWorld(mWindow),
+    mFont(),
+    mStatisticsText(),
+    mStatisticsUpdateTime(),
+    mStatisticsNumFrames(0)
 {
     mWindow.setFramerateLimit(60);
-
-    try
-    {
-        textures.load(Textures::Landscape, "Media/Textures/Desert.png");
-        textures.load(Textures::Airplaine, "Media/Textures/Eagle.png");
-    }
-    catch (std::runtime_error& e)
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-        return;
-    }
-
-    mPlayer.setTexture(textures.get(Textures::Airplaine));
-    mPlayer.setPosition(100.f, 100.f);
-
-    mLandscape.setTexture(textures.get(Textures::Landscape));
 
     mFont.loadFromFile("Media/Sansation.ttf");
     mStatisticsText.setFont(mFont);
@@ -42,7 +26,7 @@ void Game::run()
     while(mWindow.isOpen())
     {
         sf::Time elapsedTime = clock.restart();
-        timeSinceLastUpdate = elapsedTime;
+        timeSinceLastUpdate += elapsedTime;
         while(timeSinceLastUpdate > TimePerFrame)
         {
             timeSinceLastUpdate -= TimePerFrame;
@@ -80,25 +64,15 @@ void Game::processEvents()
 
 void Game::update(sf::Time elapsedTime)
 {
-    sf::Vector2f movement(0.f, 0.f);
-
-    if (mIsMovingUp)
-        movement.y -= PlayerSpeed;
-    if (mIsMovingDown)
-        movement.y += PlayerSpeed;
-    if (mIsMovingLeft)
-        movement.x -= PlayerSpeed;
-    if (mIsMovingRight)
-        movement.x += PlayerSpeed;
-
-    mPlayer.move(movement * elapsedTime.asSeconds());
+    mWorld.update(elapsedTime);
 }
 
 void Game::render()
 {
     mWindow.clear();
-    mWindow.draw(mLandscape);
-    mWindow.draw(mPlayer);
+    mWorld.draw();
+
+    mWindow.setView(mWindow.getDefaultView());
     mWindow.draw(mStatisticsText);
     mWindow.display();
 }
@@ -121,12 +95,5 @@ void Game::updateStatistics(sf::Time elapsedTime)
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-    if (key == sf::Keyboard::Z)
-        mIsMovingUp = isPressed;
-    else if (key == sf::Keyboard::S)
-        mIsMovingDown = isPressed;
-    else if (key == sf::Keyboard::Q)
-        mIsMovingLeft = isPressed;
-    else if (key == sf::Keyboard::D)
-        mIsMovingRight = isPressed;
+
 }

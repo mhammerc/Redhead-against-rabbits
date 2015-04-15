@@ -5,7 +5,12 @@ CONFIG -= qt
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    game.cpp
+    game.cpp \
+    scenenode.cpp \
+    spritenode.cpp \
+    entity.cpp \
+    aircraft.cpp \
+    world.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -20,4 +25,10 @@ qtcAddDeployment()
 
 HEADERS += \
     game.h \
-    resourceholder.h
+    resourceholder.h \
+    resourceidentifiers.h \
+    scenenode.h \
+    spritenode.h \
+    entity.h \
+    aircraft.h \
+    world.h
