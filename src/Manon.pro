@@ -10,7 +10,10 @@ SOURCES += main.cpp \
     spritenode.cpp \
     entity.cpp \
     aircraft.cpp \
-    world.cpp
+    world.cpp \
+    command.cpp \
+    commandqueue.cpp \
+    player.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -26,9 +29,14 @@ qtcAddDeployment()
 HEADERS += \
     game.h \
     resourceholder.h \
+    resourceholder.inl \
     resourceidentifiers.h \
     scenenode.h \
     spritenode.h \
     entity.h \
     aircraft.h \
-    world.h
+    world.h \
+    category.h \
+    command.h \
+    commandqueue.h \
+    player.h

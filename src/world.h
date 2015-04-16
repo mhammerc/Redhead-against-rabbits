@@ -6,11 +6,14 @@
 #include "scenenode.h"
 #include "spritenode.h"
 #include "aircraft.h"
+#include "commandqueue.h"
+#include "command.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
 #include <array>
+#include <queue>
 
 // Forward declaration
 namespace sf
@@ -25,9 +28,13 @@ public:
     void update(sf::Time dt);
     void draw();
 
+    CommandQueue& getCommandQueue();
+
 private:
     void loadTextures();
     void buildScene();
+    void adaptPlayerPosition();
+    void adaptPlayerVelocity();
 
 private:
     enum Layer
@@ -44,6 +51,7 @@ private:
 
     SceneNode mSceneGraph;
     std::array<SceneNode*, LayerCount> mSceneLayers;
+    CommandQueue mCommandQueue;
 
     sf::FloatRect mWorldBounds;
     sf::Vector2f mSpawnPosition;

@@ -5,6 +5,7 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 Game::Game() :
     mWindow(sf::VideoMode(640,480), "Readhead against rabbits", sf::Style::Close),
     mWorld(mWindow),
+    mPlayer(),
     mFont(),
     mStatisticsText(),
     mStatisticsUpdateTime(),
@@ -31,7 +32,7 @@ void Game::run()
         {
             timeSinceLastUpdate -= TimePerFrame;
 
-            processEvents();
+            processInput();
             update(TimePerFrame);
         }
 
@@ -40,27 +41,22 @@ void Game::run()
     }
 }
 
-void Game::processEvents()
+void Game::processInput()
 {
+    CommandQueue& commands = mWorld.getCommandQueue();
+
     sf::Event event;
-    while (mWindow.pollEvent(event))
+    while(mWindow.pollEvent(event))
     {
-        switch (event.type)
-        {
-            case sf::Event::KeyPressed:
-                handlePlayerInput(event.key.code, true);
-                break;
+        mPlayer.handleEvent(event, commands);
 
-            case sf::Event::KeyReleased:
-                handlePlayerInput(event.key.code, false);
-                break;
-
-            case sf::Event::Closed:
-                mWindow.close();
-                break;
-        }
+        if(event.type == sf::Event::Closed)
+            mWindow.close();
     }
+
+    mPlayer.handleRealtimeInput(commands);
 }
+
 
 void Game::update(sf::Time elapsedTime)
 {
@@ -91,9 +87,4 @@ void Game::updateStatistics(sf::Time elapsedTime)
         mStatisticsUpdateTime -= sf::seconds(1.0f);
         mStatisticsNumFrames = 0;
     }
-}
-
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
-{
-
 }

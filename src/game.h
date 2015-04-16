@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "world.h"
+#include "player.h"
 
 class Game : private sf::NonCopyable
 {
@@ -18,18 +19,18 @@ public:
     void run();
 
 private:
-    void processEvents();
+    void processInput();
     void update(sf::Time elapsedTime);
     void render();
 
     void updateStatistics(sf::Time elapsedTime);
-    void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
 private:
     static const sf::Time TimePerFrame;
 
     sf::RenderWindow mWindow;
     World mWorld;
+    Player mPlayer;
 
     sf::Font mFont;
     sf::Text mStatisticsText;
