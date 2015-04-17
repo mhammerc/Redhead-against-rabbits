@@ -5,7 +5,6 @@ CONFIG -= qt
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    game.cpp \
     scenenode.cpp \
     spritenode.cpp \
     entity.cpp \
@@ -13,7 +12,17 @@ SOURCES += main.cpp \
     world.cpp \
     command.cpp \
     commandqueue.cpp \
-    player.cpp
+    player.cpp \
+    application.cpp \
+    gamestate.cpp \
+    loadingstate.cpp \
+    menustate.cpp \
+    paralleltask.cpp \
+    pausestate.cpp \
+    state.cpp \
+    statestack.cpp \
+    titlestate.cpp \
+    utility.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -27,7 +36,6 @@ include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    game.h \
     resourceholder.h \
     resourceholder.inl \
     resourceidentifiers.h \
@@ -39,4 +47,15 @@ HEADERS += \
     category.h \
     command.h \
     commandqueue.h \
-    player.h
+    player.h \
+    application.h \
+    gamestate.h \
+    loadingstate.h \
+    menustate.h \
+    paralleltask.h \
+    pausestate.h \
+    state.h \
+    stateidentifiers.h \
+    statestack.h \
+    titlestate.h \
+    utility.h
