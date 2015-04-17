@@ -20,6 +20,7 @@ Application::Application() :
     mStatisticsNumFrames(0)
 {
     mWindow.setKeyRepeatEnabled(false);
+    mWindow.setFramerateLimit(60);
 
     mFonts.load(Fonts::Main, "Media/Sansation.ttf");
     mTextures.load(Textures::TitleScreen, "Media/Textures/TitleScreen.png");
