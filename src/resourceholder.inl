@@ -36,14 +36,14 @@ Resource& ResourceHolder<Resource, Identifier>::get(Identifier id)
     return *found->second;
 }
 
-/*template <typename Resource, typename Identifier>
-const Resource& ResourceHolder<Resource, Identifier>::get(Identifier id) const
+template <typename Resource, typename Identifier>
+const Resource& ResourceHolder<Resource, Identifier>::getConst(Identifier id) const
 {
     auto found = mResourceMap.find(id);
     assert(found != mResourceMap.end());
 
     return *found->second;
-}*/
+}
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::insertResource(Identifier id, std::unique_ptr<Resource> resource)

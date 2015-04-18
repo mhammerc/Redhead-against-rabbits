@@ -22,7 +22,12 @@ SOURCES += main.cpp \
     state.cpp \
     statestack.cpp \
     titlestate.cpp \
-    utility.cpp
+    utility.cpp \
+    button.cpp \
+    component.cpp \
+    container.cpp \
+    label.cpp \
+    settingsstate.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -58,4 +63,9 @@ HEADERS += \
     stateidentifiers.h \
     statestack.h \
     titlestate.h \
-    utility.h
+    utility.h \
+    button.h \
+    component.h \
+    container.h \
+    label.h \
+    settingsstate.h

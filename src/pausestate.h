@@ -2,6 +2,7 @@
 #define PAUSESTATE_H
 
 #include "state.h"
+#include "container.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -18,7 +19,7 @@ public:
 private:
     sf::Sprite mBackgroundSprite;
     sf::Text mPausedText;
-    sf::Text mInstructionText;
+    GUI::Container mGUIContainer;
 };
 
 #endif // PAUSESTATE_H

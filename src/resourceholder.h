@@ -17,7 +17,7 @@ public:
     void load(Identifier id, const std::string &filename, const Parameter& secondParam);
 
     Resource& get(Identifier id);
-    /*const Resource& get(Identifier id) const;*/
+    const Resource& getConst(Identifier id) const;
 
 
 private:
