@@ -27,7 +27,12 @@ SOURCES += main.cpp \
     component.cpp \
     container.cpp \
     label.cpp \
-    settingsstate.cpp
+    settingsstate.cpp \
+    datatables.cpp \
+    gameoverstate.cpp \
+    pickup.cpp \
+    projectile.cpp \
+    textnode.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -68,4 +73,9 @@ HEADERS += \
     component.h \
     container.h \
     label.h \
-    settingsstate.h
+    settingsstate.h \
+    datatables.h \
+    gameoverstate.h \
+    pickup.h \
+    projectile.h \
+    textnode.h

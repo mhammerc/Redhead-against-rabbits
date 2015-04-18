@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 
+using namespace std::placeholders;
+
 struct AircraftMover
 {
     AircraftMover(float vx, float vy) :
@@ -22,12 +24,15 @@ struct AircraftMover
     sf::Vector2f velocity;
 };
 
-Player::Player()
+Player::Player() :
+    mCurrentMissionStatus(MissionRunning)
 {
     mKeyBinding[sf::Keyboard::Left] = MoveLeft;
     mKeyBinding[sf::Keyboard::Right] = MoveRight;
     mKeyBinding[sf::Keyboard::Up] = MoveUp;
     mKeyBinding[sf::Keyboard::Down] = MoveDown;
+    mKeyBinding[sf::Keyboard::Space] = Fire;
+    mKeyBinding[sf::Keyboard::M] = LaunchMissile;
 
     initializeActions();
 
@@ -89,14 +94,25 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
     return sf::Keyboard::Unknown;
 }
 
+void Player::setMissionStatus(MissionStatus status)
+{
+    mCurrentMissionStatus = status;
+}
+
+Player::MissionStatus Player::getMissionStatus() const
+{
+    return mCurrentMissionStatus;
+}
+
 void Player::initializeActions()
 {
-    const float playerSpeed = 200.f;
 
-    mActionBinding[MoveLeft].action = derivedAction<Aircraft>(AircraftMover(-playerSpeed, 0.f));
-    mActionBinding[MoveRight].action = derivedAction<Aircraft>(AircraftMover(+playerSpeed, 0.f));
-    mActionBinding[MoveUp].action = derivedAction<Aircraft>(AircraftMover(0.f, -playerSpeed));
-    mActionBinding[MoveDown].action = derivedAction<Aircraft>(AircraftMover(0.f, +playerSpeed));
+    mActionBinding[MoveLeft].action      = derivedAction<Aircraft>(AircraftMover(-200,  0));
+    mActionBinding[MoveRight].action     = derivedAction<Aircraft>(AircraftMover(+200,  0));
+    mActionBinding[MoveUp].action        = derivedAction<Aircraft>(AircraftMover( 0, -200));
+    mActionBinding[MoveDown].action      = derivedAction<Aircraft>(AircraftMover( 0, +200));
+    mActionBinding[Fire].action          = derivedAction<Aircraft>([] (Aircraft& a, sf::Time){ a.fire(); });
+    mActionBinding[LaunchMissile].action = derivedAction<Aircraft>([] (Aircraft& a, sf::Time){ a.launchMissile(); });
 }
 
 bool Player::isRealtimeAction(Action action)
@@ -107,6 +123,7 @@ bool Player::isRealtimeAction(Action action)
     case MoveRight:
     case MoveDown:
     case MoveUp:
+    case Fire:
         return true;
     default:
         return false;
