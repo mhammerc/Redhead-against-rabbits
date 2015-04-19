@@ -5,9 +5,12 @@
 #include "resourceidentifiers.h"
 #include "scenenode.h"
 #include "spritenode.h"
-#include "aircraft.h"
 #include "commandqueue.h"
 #include "command.h"
+
+#include "tilemapnode.h"
+
+#include "rabbits_level.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -30,23 +33,14 @@ public:
 
     CommandQueue& getCommandQueue();
 
-    bool hasAlivePlayer() const;
-    bool hasPlayerReachedEnd() const;
-
 private:
     void loadTextures();
-    void adaptPlayerPosition();
-    void adaptPlayerVelocity();
+
     void handleCollisions();
 
     void buildScene();
-    void addEnemies();
-    void addEnemy(Aircraft::Type type, float relX, float relY);
-    void spawnEnemies();
-    void destroyEntitiesOutsideView();
-    void guideMissiles();
+
     sf::FloatRect getViewBounds() const;
-    sf::FloatRect getBattlefieldBounds() const;
 
 private:
     enum Layer
@@ -54,21 +48,6 @@ private:
         Background,
         Air,
         LayerCount
-    };
-
-    struct SpawnPoint
-    {
-        SpawnPoint(Aircraft::Type type, float x, float y) :
-            type(type),
-            x(x),
-            y(y)
-        {
-
-        }
-
-        Aircraft::Type type;
-        float x;
-        float y;
     };
 
 private:
@@ -80,14 +59,6 @@ private:
     SceneNode mSceneGraph;
     std::array<SceneNode*, LayerCount> mSceneLayers;
     CommandQueue mCommandQueue;
-
-    sf::FloatRect mWorldBounds;
-    sf::Vector2f mSpawnPosition;
-    float mScrollSpeed;
-    Aircraft* mPlayerAircraft;
-
-    std::vector<SpawnPoint> mEnemySpawnPoints;
-    std::vector<Aircraft*> mActiveEnemies;
 };
 
 #endif // WORLD_H

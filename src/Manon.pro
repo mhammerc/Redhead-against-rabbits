@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     gameoverstate.cpp \
     pickup.cpp \
     projectile.cpp \
-    textnode.cpp
+    textnode.cpp \
+    tilemapnode.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -78,4 +79,6 @@ HEADERS += \
     gameoverstate.h \
     pickup.h \
     projectile.h \
-    textnode.h
+    textnode.h \
+    tilemapnode.h \
+    rabbits_level.h

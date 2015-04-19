@@ -25,7 +25,8 @@ namespace Textures
         TitleScreen,
         ButtonNormal,
         ButtonSelected,
-        ButtonPressed
+        ButtonPressed,
+        Tileset
     };
 }
 

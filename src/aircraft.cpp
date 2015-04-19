@@ -1,6 +1,5 @@
 #include "aircraft.h"
 #include "datatables.h"
-#include "resourceholder.h"
 #include "utility.h"
 #include "pickup.h"
 #include "commandqueue.h"
