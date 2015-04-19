@@ -58,13 +58,13 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures, const FontHolder& f
     mHealthDisplay = healthDisplay.get();
     attachChild(std::move(healthDisplay));
 
-    if (getCategory() == Category::PlayerAircraft)
+    /*if (getCategory() == Category::PlayerAircraft)
     {
         std::unique_ptr<TextNode> missileDisplay(new TextNode(fonts, ""));
         missileDisplay->setPosition(0, 70);
         mMissileDisplay = missileDisplay.get();
         attachChild(std::move(missileDisplay));
-    }
+    }*/
 
     updateTexts();
 }
@@ -98,10 +98,7 @@ void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commands)
 
 unsigned int Aircraft::getCategory() const
 {
-    if (isAllied())
-        return Category::PlayerAircraft;
-    else
-        return Category::EnemyAircraft;
+
 }
 
 sf::FloatRect Aircraft::getBoundingRect() const

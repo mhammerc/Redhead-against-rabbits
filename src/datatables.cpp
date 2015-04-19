@@ -1,7 +1,10 @@
 #include "datatables.h"
+
 #include "aircraft.h"
 #include "projectile.h"
 #include "pickup.h"
+
+#include "character.h"
 
 using namespace std::placeholders;
 
@@ -69,6 +72,30 @@ std::vector<PickupData> initializePickupData()
 
     data[Pickup::FireRate].texture = Textures::FireRate;
     data[Pickup::FireRate].action = std::bind(&Aircraft::increaseFireRate, _1);
+
+    return data;
+}
+
+
+std::vector<CharacterData> initializeCharacterData()
+{
+    std::vector<CharacterData> data(Character::TypeCount);
+
+    data[Character::Player].texture = Textures::PlayerCharacter;
+    data[Character::Player].hitpoints = 100;
+    data[Character::Player].speed = 5.f;
+
+    data[Character::Allied].texture = Textures::AlliedCharacter;
+    data[Character::Allied].hitpoints = 100;
+    data[Character::Allied].speed = 5.f;
+
+    data[Character::Neutral].texture = Textures::NeutralCharacter;
+    data[Character::Neutral].hitpoints = 300;
+    data[Character::Neutral].speed = 5.f;
+
+    data[Character::Enemy].texture = Textures::EnemyCharacter;
+    data[Character::Enemy].hitpoints = 20;
+    data[Character::Enemy].speed = 5.f;
 
     return data;
 }

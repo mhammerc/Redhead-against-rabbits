@@ -50,5 +50,14 @@ std::vector<AircraftData> initializeAircraftData();
 std::vector<ProjectileData> initializeProjectileData();
 std::vector<PickupData> initializePickupData();
 
+struct CharacterData
+{
+    int hitpoints;
+    float speed;
+    Textures::ID texture;
+};
+
+std::vector<CharacterData> initializeCharacterData();
+
 #endif // DATATABLES_H
 

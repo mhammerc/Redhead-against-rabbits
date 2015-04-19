@@ -7,10 +7,11 @@
 #include "spritenode.h"
 #include "commandqueue.h"
 #include "command.h"
-
 #include "tilemapnode.h"
 
 #include "rabbits_level.h"
+#include "player.h"
+#include "character.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -30,6 +31,7 @@ public:
     explicit World(sf::RenderWindow& window, FontHolder& fonts);
     void update(sf::Time dt);
     void draw();
+    void handleEvent(const sf::Event& event);
 
     CommandQueue& getCommandQueue();
 
@@ -59,6 +61,9 @@ private:
     SceneNode mSceneGraph;
     std::array<SceneNode*, LayerCount> mSceneLayers;
     CommandQueue mCommandQueue;
+
+    Player mPlayer;
+    Character* mPlayerCharacter;
 };
 
 #endif // WORLD_H

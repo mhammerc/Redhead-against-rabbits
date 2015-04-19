@@ -8,15 +8,14 @@ namespace Category
     {
         None = 0,
         SceneAirLayer = 1 << 0,
-        PlayerAircraft = 1 << 1,
-        AlliedAircraft = 1 << 2,
-        EnemyAircraft = 1 << 3,
-        Pickup = 1 << 4,
-        AlliedProjectile = 1 << 5,
-        EnemyProjectile = 1 << 6,
+        PlayerCharacter = 1 << 1,
+        AlliedCharacter = 1 << 2,
+        NeutralCharacter = 1 << 3,
+        EnemyCharacter = 1 << 4,
 
-        Aircraft = PlayerAircraft | AlliedAircraft | EnemyAircraft,
-        Projectile = AlliedProjectile | EnemyProjectile
+        EveryCharacters = PlayerCharacter | AlliedCharacter | NeutralCharacter | EnemyCharacter,
+        NonPlayableCharacters = AlliedCharacter | NeutralCharacter | EnemyCharacter,
+        NonEnnemyCharacters = AlliedCharacter | NeutralCharacter,
     };
 }
 

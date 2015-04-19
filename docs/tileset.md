@@ -8,13 +8,15 @@ Every tiles are 32*32.
 
 Tileset size is 480*1088.
 
+There is 34 lines and 480 columns.
+
 ### Code
 
-Clean grass = `261`
+Clean grass : `261`
 
-Water = `294`
+Water : `294`
 
-Grass + Rock + Water = `279`
+Grass + Rock + Water : `279`
 
 Left side of the beginning of a wood bridge : `280`
 

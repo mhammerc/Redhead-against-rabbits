@@ -26,7 +26,11 @@ namespace Textures
         ButtonNormal,
         ButtonSelected,
         ButtonPressed,
-        Tileset
+        Tileset,
+        PlayerCharacter,
+        AlliedCharacter,
+        EnemyCharacter,
+        NeutralCharacter,
     };
 }
 

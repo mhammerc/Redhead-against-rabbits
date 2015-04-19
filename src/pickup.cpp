@@ -22,7 +22,7 @@ Pickup::Pickup(Type type, const TextureHolder& textures) :
 
 unsigned int Pickup::getCategory() const
 {
-    return Category::Pickup;
+    /*return Category::Pickup;*/
 }
 
 sf::FloatRect Pickup::getBoundingRect() const

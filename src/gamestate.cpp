@@ -28,6 +28,8 @@ bool GameState::handleEvent(const sf::Event& event)
     /*CommandQueue& commands = mWorld.getCommandQueue();
     mPlayer.handleEvent(event, commands);*/
 
+    mWorld.handleEvent(event);
+
     // Escape pressed, trigger the pause screen
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         requestStackPush(States::Pause);

@@ -58,10 +58,10 @@ void Projectile::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) 
 
 unsigned int Projectile::getCategory() const
 {
-    if (mType == EnemyBullet)
+    /*if (mType == EnemyBullet)
         return Category::EnemyProjectile;
     else
-        return Category::AlliedProjectile;
+        return Category::AlliedProjectile;*/
 }
 
 sf::FloatRect Projectile::getBoundingRect() const

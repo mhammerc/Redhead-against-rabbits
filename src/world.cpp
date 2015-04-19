@@ -10,8 +10,8 @@
 World::World(sf::RenderWindow& window, FontHolder& fonts) :
     mWindow(window),
     mWorldView(window.getDefaultView()),
-    mFonts(fonts),
     mTextures(),
+    mFonts(fonts),
     mSceneGraph(),
     mSceneLayers()
 {
@@ -22,18 +22,32 @@ World::World(sf::RenderWindow& window, FontHolder& fonts) :
 void World::update(sf::Time dt)
 {
     handleCollisions();
+    mPlayer.handleRealtimeInput(mCommandQueue);
+
+    mPlayerCharacter->setVelocity(0.f, 0.f);
+
+    while (!mCommandQueue.isEmpty())
+            mSceneGraph.onCommand(mCommandQueue.pop(), dt);
 
     // Remove all destroyed entities, create new ones
     mSceneGraph.removeWrecks();
 
     // Regular update step, adapt position (correct if outside view)
     mSceneGraph.update(dt, mCommandQueue);
+
+    // Center view on Player
+    mWorldView.setCenter(mPlayerCharacter->getPosition());
 }
 
 void World::draw()
 {
     mWindow.setView(mWorldView);
     mWindow.draw(mSceneGraph);
+}
+
+void World::handleEvent(const sf::Event &event)
+{
+    mPlayer.handleEvent(event, mCommandQueue);
 }
 
 CommandQueue& World::getCommandQueue()
@@ -44,6 +58,7 @@ CommandQueue& World::getCommandQueue()
 void World::loadTextures()
 {
     mTextures.load(Textures::Tileset, "Media/Textures/tileset_light.png");
+    mTextures.load(Textures::PlayerCharacter, "Media/Textures/player.png");
 }
 
 bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Category::Type type2)
@@ -120,13 +135,21 @@ void World::buildScene()
         mSceneGraph.attachChild(std::move(layer));
     }
 
-
     // Add the tile map
     std::unique_ptr<TileMapNode> tileMap(new TileMapNode(mTextures));
     tileMap->setPosition(0, 0);
     tileMap->load(sf::Vector2u(32, 32), rabbits::map, 32, 18);
     tileMap->addObjectsLayer(sf::Vector2u(32, 32), rabbits::objects, 32, 18);
     mSceneLayers[Background]->attachChild(std::move(tileMap));
+
+    // Add the player
+    std::unique_ptr<Character> player(new Character(Character::Player, mTextures, mFonts));
+    mPlayerCharacter = player.get();
+    mPlayerCharacter->setPosition(0, 0);
+    mSceneLayers[Air]->attachChild(std::move(player));
+
+    // Set the view
+    mWorldView.zoom(0.5);
 }
 
 sf::FloatRect World::getViewBounds() const
