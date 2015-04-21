@@ -16,9 +16,12 @@ struct PlayerMover
 
     }
 
-    void operator() (Character& player, sf::Time) const
+    void operator() (Character& player, sf::Time dt) const
     {
-        player.accelerate(velocity);
+        if(player.isMoveAccepted(velocity, dt))
+        {
+            player.accelerate(velocity);
+        }
     }
 
     sf::Vector2f velocity;

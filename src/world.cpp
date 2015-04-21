@@ -22,6 +22,7 @@ World::World(sf::RenderWindow& window, FontHolder& fonts) :
 void World::update(sf::Time dt)
 {
     handleCollisions();
+    
     mPlayer.handleRealtimeInput(mCommandQueue);
 
     mPlayerCharacter->setVelocity(0.f, 0.f);
@@ -84,6 +85,16 @@ bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Categor
 
 void World::handleCollisions()
 {
+   /*if(mTileMap->checkCollisions(mPlayerCharacter->getBoundingRect()))
+    {
+        mPlayerCharacter->backToPreviousPosition();
+        mPlayerCharacter->denyMove();
+    }
+    else
+    {
+        mPlayerCharacter->agreeMove();
+    }*/
+
     /*std::set<SceneNode::Pair> collisionPairs;
     mSceneGraph.checkSceneCollision(mSceneGraph, collisionPairs);
 
@@ -137,19 +148,20 @@ void World::buildScene()
 
     // Add the tile map
     std::unique_ptr<TileMapNode> tileMap(new TileMapNode(mTextures));
+    mTileMap = tileMap.get();
     tileMap->setPosition(0, 0);
-    tileMap->load(sf::Vector2u(32, 32), rabbits::map, 32, 18);
-    tileMap->addObjectsLayer(sf::Vector2u(32, 32), rabbits::objects, 32, 18);
+    tileMap->completeLoad(sf::Vector2u(32, 32), rabbits::map, rabbits::objects, rabbits::collisions, 32, 18);
     mSceneLayers[Background]->attachChild(std::move(tileMap));
 
     // Add the player
-    std::unique_ptr<Character> player(new Character(Character::Player, mTextures, mFonts));
+    std::unique_ptr<Character> player(new Character(Character::Player, mTextures, mFonts, mTileMap));
     mPlayerCharacter = player.get();
-    mPlayerCharacter->setPosition(0, 0);
+    mPlayerCharacter->scale(0.8, 0.8);
+    mPlayerCharacter->setPosition(64, 64);
     mSceneLayers[Air]->attachChild(std::move(player));
 
     // Set the view
-    mWorldView.zoom(0.5);
+    mWorldView.zoom(0.6);
 }
 
 sf::FloatRect World::getViewBounds() const

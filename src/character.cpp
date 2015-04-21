@@ -12,11 +12,13 @@ namespace
     const std::vector<CharacterData> Table = initializeCharacterData();
 }
 
-Character::Character(Type type, const TextureHolder& textures, const FontHolder& fonts) :
+Character::Character(Type type, const TextureHolder& textures, const FontHolder& fonts, TileMapNode* tileMap) :
     Entity(Table[type].hitpoints),
     mType(type),
     mSprite(textures.getConst(Table[type].texture)),
-    mIsMarkedForRemoval(false)
+    mIsMarkedForRemoval(false),
+    mPreviousPosition(0, 0),
+    mTileMap(tileMap)
 {
    centerOrigin(mSprite);
 }
@@ -68,6 +70,25 @@ float Character::getMaxSpeed() const
     return Table[mType].speed;
 }
 
+bool Character::isMoveAccepted(sf::Vector2f velocity, sf::Time dt)
+{
+    sf::Vector2f position = getPosition();
+    position.x += velocity.x * dt.asSeconds();
+    position.y += velocity.y * dt.asSeconds();
+
+    if(mTileMap->checkCollisions(sf::FloatRect(sf::Vector2f(position.x-getBoundingRect().width/2, position.y-getBoundingRect().height/2), sf::Vector2f(getBoundingRect().width, getBoundingRect().height))))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void Character::backToPreviousPosition()
+{
+    setPosition(mPreviousPosition);
+}
+
 void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(mSprite, states);
@@ -75,5 +96,7 @@ void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) c
 
 void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
 {
+    mPreviousPosition = this->getPosition();
+
     Entity::updateCurrent(dt, commands);
 }

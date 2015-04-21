@@ -64,6 +64,8 @@ private:
 
     Player mPlayer;
     Character* mPlayerCharacter;
+
+    TileMapNode* mTileMap;
 };
 
 #endif // WORLD_H

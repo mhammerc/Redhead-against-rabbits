@@ -20,12 +20,17 @@ public:
     void destroy();
     virtual bool isDestroyed() const;
 
+    void agreeMove();
+    void denyMove();
+
 protected:
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 
 private:
     sf::Vector2f mVelocity;
     int mHitpoints;
+
+    bool isMoveRefused;
 
 };
 

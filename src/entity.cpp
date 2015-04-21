@@ -5,7 +5,8 @@
 
 Entity::Entity(int hitpoints) :
     mVelocity(),
-    mHitpoints(hitpoints)
+    mHitpoints(hitpoints),
+    isMoveRefused(false)
 {
 }
 
@@ -65,9 +66,20 @@ bool Entity::isDestroyed() const
     return mHitpoints <= 0;
 }
 
+void Entity::agreeMove()
+{
+    isMoveRefused = false;
+}
+
+void Entity::denyMove()
+{
+    isMoveRefused = true;
+}
+
 void Entity::updateCurrent(sf::Time dt, CommandQueue&)
 {
-    move(mVelocity * dt.asSeconds());
+    if(!isMoveRefused)
+        move(mVelocity * dt.asSeconds());
 }
 
 

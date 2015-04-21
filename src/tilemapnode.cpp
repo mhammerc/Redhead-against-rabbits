@@ -22,8 +22,21 @@ void TileMapNode::setTexture(const TextureHolder &textures)
     mTileset = textures.getConst(Textures::Tileset);
 }
 
-void TileMapNode::load(sf::Vector2u tileSize, const int *tiles, unsigned int width, unsigned int height)
+void TileMapNode::completeLoad(sf::Vector2u tileSize, const int *tiles, const int *objects, const int *collisions, unsigned int width, unsigned int height)
 {
+    load(tileSize, tiles, width, height);
+
+    addObjectsLayer(tileSize, objects, width, height);
+
+    mCollisions = collisions;
+}
+
+void TileMapNode::load(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height)
+{
+    mTileSize = tileSize;
+    mWidth = width;
+    mHeight = height;
+
     // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
     mVertices.setPrimitiveType(sf::Quads);
     mVertices.resize(width * height * 4);
@@ -56,6 +69,36 @@ void TileMapNode::load(sf::Vector2u tileSize, const int *tiles, unsigned int wid
             quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
         }
     }
+}
+
+bool TileMapNode::checkCollisions(sf::FloatRect rect)
+{
+    for(unsigned int i = 0; i * 4 < mVertices.getVertexCount(); ++i)
+    {
+        if(mCollisions[i] == 0)
+        {
+            continue;
+        }
+
+        int y = 0;
+
+        for(int j = i; j >= mWidth; y += 1, j -= mWidth);
+
+        y *= mTileSize.y;
+
+        sf::Vector2i tilePosition;
+        tilePosition.y = y;
+        tilePosition.x = (i % mWidth) * mTileSize.x;
+
+        sf::FloatRect tile(sf::Vector2f(tilePosition.x, tilePosition.y), sf::Vector2f(mTileSize.x, mTileSize.y));
+
+        if(tile.intersects(rect))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void TileMapNode::addObjectsLayer(sf::Vector2u tileSize, const int *tiles, unsigned int width, unsigned int height)

@@ -6,6 +6,8 @@
 #include "command.h"
 #include "commandqueue.h"
 
+#include "tilemapnode.h"
+
 #include <SFML/Graphics.hpp>
 
 #include <string>
@@ -24,7 +26,7 @@ public:
     };
 
 public:
-    Character(Type type, const TextureHolder& textures, const FontHolder& fonts);
+    Character(Type type, const TextureHolder& textures, const FontHolder& fonts, TileMapNode* tileMap);
 
     virtual unsigned int getCategory() const;
     virtual sf::FloatRect getBoundingRect();
@@ -37,6 +39,10 @@ public:
 
     float getMaxSpeed() const;
 
+    bool isMoveAccepted(sf::Vector2f velocity, sf::Time dt);
+
+    void backToPreviousPosition();
+
 private:
     virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
@@ -45,6 +51,10 @@ private:
     Type mType;
     sf::Sprite mSprite;
     bool mIsMarkedForRemoval;
+
+    sf::Vector2f mPreviousPosition;
+
+    TileMapNode* mTileMap;
 };
 
 #endif // CHARACTER_H
