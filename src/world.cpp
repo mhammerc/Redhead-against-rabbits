@@ -149,8 +149,8 @@ void World::buildScene()
     // Add the tile map
     std::unique_ptr<TileMapNode> tileMap(new TileMapNode(mTextures));
     mTileMap = tileMap.get();
-    tileMap->setPosition(0, 0);
-    tileMap->completeLoad(sf::Vector2u(32, 32), rabbits::map, rabbits::objects, rabbits::collisions, 32, 18);
+    mTileMap->setPosition(0, 0);
+    mTileMap->completeLoad(TileMapNode::Rabbits);
     mSceneLayers[Background]->attachChild(std::move(tileMap));
 
     // Add the player

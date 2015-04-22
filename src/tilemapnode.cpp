@@ -1,13 +1,7 @@
 #include "tilemapnode.h"
 
 TileMapNode::TileMapNode(const TextureHolder& textures) :
-    mTileset(textures.getConst(Textures::Tileset))
-{
-
-}
-
-TileMapNode::TileMapNode(const sf::Texture &texture) :
-    mTileset(texture)
+    mTextures(textures)
 {
 
 }
@@ -22,15 +16,19 @@ void TileMapNode::setTexture(const TextureHolder &textures)
     mTileset = textures.getConst(Textures::Tileset);
 }
 
-void TileMapNode::completeLoad(sf::Vector2u tileSize, const int* firstLayer, const int* secondLayer, const int *collisions, unsigned int width, unsigned int height)
+void TileMapNode::completeLoad(Type type)
 {
-    mTileSize = tileSize;
-    mWidth = width;
-    mHeight = height;
-    mCollisions = collisions;
+    mData = initializeLevelData();
 
-    addLayer(firstLayer);
-    addLayer(secondLayer);
+    mTileset = mTextures.getConst(mData[type].texture);
+
+    mTileSize = mData[type].tileSize;
+    mCollisions = mData[type].collisions;
+    mWidth = mData[type].levelSize.x;
+    mHeight = mData[type].levelSize.y;
+
+    addLayer(mData[type].firstLayer);
+    addLayer(mData[type].secondLayer);
 }
 
 void TileMapNode::addLayer(const int* layer)

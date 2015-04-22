@@ -5,6 +5,7 @@
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include <vector>
 #include <functional>
@@ -58,6 +59,18 @@ struct CharacterData
 };
 
 std::vector<CharacterData> initializeCharacterData();
+
+struct LevelData
+{
+    int* firstLayer;
+    int* secondLayer;
+    int* collisions;
+    sf::Vector2u tileSize;
+    sf::Vector2f levelSize;
+    Textures::ID texture;
+};
+
+std::vector<LevelData> initializeLevelData();
 
 #endif // DATATABLES_H
 

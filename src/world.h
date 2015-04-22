@@ -9,7 +9,7 @@
 #include "command.h"
 #include "tilemapnode.h"
 
-#include "rabbits_level.h"
+#include "level_datatables.cpp"
 #include "player.h"
 #include "character.h"
 
