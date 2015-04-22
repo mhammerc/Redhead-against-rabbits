@@ -22,58 +22,62 @@ void TileMapNode::setTexture(const TextureHolder &textures)
     mTileset = textures.getConst(Textures::Tileset);
 }
 
-void TileMapNode::completeLoad(sf::Vector2u tileSize, const int *tiles, const int *objects, const int *collisions, unsigned int width, unsigned int height)
-{
-    load(tileSize, tiles, width, height);
-
-    addObjectsLayer(tileSize, objects, width, height);
-
-    mCollisions = collisions;
-}
-
-void TileMapNode::load(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height)
+void TileMapNode::completeLoad(sf::Vector2u tileSize, const int* firstLayer, const int* secondLayer, const int *collisions, unsigned int width, unsigned int height)
 {
     mTileSize = tileSize;
     mWidth = width;
     mHeight = height;
+    mCollisions = collisions;
+
+    addLayer(firstLayer);
+    addLayer(secondLayer);
+}
+
+void TileMapNode::addLayer(const int* layer)
+{
+    sf::VertexArray vertexArray;
 
     // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
-    mVertices.setPrimitiveType(sf::Quads);
-    mVertices.resize(width * height * 4);
+    vertexArray.setPrimitiveType(sf::Quads);
+    vertexArray.resize(mWidth * mHeight * 4);
 
     // on remplit le tableau de vertex, avec un quad par tuile
-    for (unsigned int i = 0; i < width; ++i)
+    for (unsigned int i = 0; i < mWidth; ++i)
     {
-        for (unsigned int j = 0; j < height; ++j)
+        for (unsigned int j = 0; j < mHeight; ++j)
         {
             // on récupère le numéro de tuile courant
-            int tileNumber = tiles[i + j * width];
+            int tileNumber = layer[i + j * mWidth];
 
             // on en déduit sa position dans la texture du tileset
-            int tu = tileNumber % (mTileset.getSize().x / tileSize.x);
-            int tv = tileNumber / (mTileset.getSize().x / tileSize.x);
+            int tu = tileNumber % (mTileset.getSize().x / mTileSize.x);
+            int tv = tileNumber / (mTileset.getSize().x / mTileSize.x);
 
             // on récupère un pointeur vers le quad à définir dans le tableau de vertex
-            sf::Vertex* quad = &mVertices[(i + j * width) * 4];
+            sf::Vertex* quad = &vertexArray[(i + j * mWidth) * 4];
 
             // on définit ses quatre coins
-            quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
-            quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
-            quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
-            quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
+            quad[0].position = sf::Vector2f(i * mTileSize.x, j * mTileSize.y);
+            quad[1].position = sf::Vector2f((i + 1) * mTileSize.x, j * mTileSize.y);
+            quad[2].position = sf::Vector2f((i + 1) * mTileSize.x, (j + 1) * mTileSize.y);
+            quad[3].position = sf::Vector2f(i * mTileSize.x, (j + 1) * mTileSize.y);
 
             // on définit ses quatre coordonnées de texture
-            quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-            quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-            quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+            quad[0].texCoords = sf::Vector2f(tu * mTileSize.x, tv * mTileSize.y);
+            quad[1].texCoords = sf::Vector2f((tu + 1) * mTileSize.x, tv * mTileSize.y);
+            quad[2].texCoords = sf::Vector2f((tu + 1) * mTileSize.x, (tv + 1) * mTileSize.y);
+            quad[3].texCoords = sf::Vector2f(tu * mTileSize.x, (tv + 1) * mTileSize.y);
         }
     }
+
+    mVerticesArray.push_back(vertexArray);
 }
 
 bool TileMapNode::checkCollisions(sf::FloatRect rect)
 {
-    for(unsigned int i = 0; i * 4 < mVertices.getVertexCount(); ++i)
+    unsigned int verticeCount = mWidth * mHeight * 4;
+
+    for(unsigned int i = 0; i * 4 < verticeCount; ++i)
     {
         if(mCollisions[i] == 0)
         {
@@ -82,7 +86,7 @@ bool TileMapNode::checkCollisions(sf::FloatRect rect)
 
         int y = 0;
 
-        for(int j = i; j >= mWidth; y += 1, j -= mWidth);
+        for(unsigned int j = i; j >= mWidth; y += 1, j -= mWidth);
 
         y *= mTileSize.y;
 
@@ -101,21 +105,16 @@ bool TileMapNode::checkCollisions(sf::FloatRect rect)
     return false;
 }
 
-void TileMapNode::addObjectsLayer(sf::Vector2u tileSize, const int *tiles, unsigned int width, unsigned int height)
-{
-    std::unique_ptr<TileMapNode> objects(new TileMapNode(mTileset));
-    objects->setPosition(0, 0);
-    objects->load(tileSize, tiles, width, height);
-    attachChild(std::move(objects));
-}
-
 void TileMapNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    //states.transform *= getTransform();
+    states.transform *= getTransform();
 
     states.texture = &mTileset;
 
-    target.draw(mVertices, states);
+    for(sf::VertexArray vertex : mVerticesArray)
+    {
+        target.draw(vertex, states);
+    }
 }
 
 

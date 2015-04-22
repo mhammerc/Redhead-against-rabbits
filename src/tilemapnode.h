@@ -8,6 +8,7 @@
 #include "resourceidentifiers.h"
 
 #include <iostream>
+#include <vector>
 
 class TileMapNode : public SceneNode
 {
@@ -18,17 +19,18 @@ public:
 
     void setTexture(const TextureHolder& textures);
 
-    void completeLoad(sf::Vector2u tileSize, const int* tiles, const int* objects, const int* collisions, unsigned int width, unsigned int height);
+    void completeLoad(sf::Vector2u tileSize, const int* firstLayer, const int* secondLayer, const int* collisions, unsigned int width, unsigned int height);
     void load(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height);
 
     bool checkCollisions(sf::FloatRect rect);
 
 private:
-    void addObjectsLayer(sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height);
+    void addLayer(const int* layer);
     virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
-    sf::VertexArray mVertices;
+    std::vector<sf::VertexArray> mVerticesArray;
+
     sf::Texture mTileset;
 
     sf::Vector2u mTileSize;
