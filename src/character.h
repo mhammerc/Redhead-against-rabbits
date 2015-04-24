@@ -7,6 +7,8 @@
 #include "commandqueue.h"
 
 #include "tilemapnode.h"
+#include "animatedspritenode.h"
+#include "animationtable.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -49,7 +51,7 @@ private:
 
 private:
     Type mType;
-    sf::Sprite mSprite;
+    AnimatedSpriteNode mSprite;
     bool mIsMarkedForRemoval;
 
     sf::Vector2f mPreviousPosition;

@@ -15,12 +15,11 @@ namespace
 Character::Character(Type type, const TextureHolder& textures, const FontHolder& fonts, TileMapNode* tileMap) :
     Entity(Table[type].hitpoints),
     mType(type),
-    mSprite(textures.getConst(Table[type].texture)),
+    mSprite(textures.getConst(Table[type].texture), initializeAnimationData(Table[type].texture)),
     mIsMarkedForRemoval(false),
     mPreviousPosition(0, 0),
     mTileMap(tileMap)
 {
-   centerOrigin(mSprite);
 }
 
 unsigned int Character::getCategory() const
@@ -37,7 +36,7 @@ unsigned int Character::getCategory() const
 
 sf::FloatRect Character::getBoundingRect()
 {
-    return getWorldTransform().transformRect(mSprite.getGlobalBounds());
+    return getWorldTransform().transformRect(mSprite.getBoundingRect());
 }
 
 bool Character::isMarkedForRemoval() const
@@ -96,6 +95,26 @@ void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) c
 
 void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
 {
+    if(getVelocity().x == 0 && getVelocity().y == 0)
+    {
+        mSprite.setState(0);
+    }
+    else if(!(getVelocity().x == 0) || !(getVelocity().y == 0))
+    {
+        mSprite.setState(1);
+
+        if(getVelocity().x > 0)
+        {
+            mSprite.setScale(1, 1);
+        }
+        else if(getVelocity().x < 0)
+        {
+            mSprite.setScale(-1, 1);
+        }
+    }
+
+    mSprite.nextTick(dt);
+
     mPreviousPosition = this->getPosition();
 
     Entity::updateCurrent(dt, commands);

@@ -59,7 +59,7 @@ CommandQueue& World::getCommandQueue()
 void World::loadTextures()
 {
     mTextures.load(Textures::Tileset, "Media/Textures/tileset_light.png");
-    mTextures.load(Textures::PlayerCharacter, "Media/Textures/player.png");
+    mTextures.load(Textures::PlayerCharacter, "Media/Textures/Buster.png");
 }
 
 bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Category::Type type2)

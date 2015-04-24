@@ -35,7 +35,9 @@ SOURCES += main.cpp \
     textnode.cpp \
     tilemapnode.cpp \
     character.cpp \
-    level_datatables.cpp
+    level_datatables.cpp \
+    animatedspritenode.cpp \
+    animationtable.cpp
 
 LIBS += -L"/home/imote/Development/SFML-2.2/lib"
 
@@ -83,4 +85,6 @@ HEADERS += \
     projectile.h \
     textnode.h \
     tilemapnode.h \
-    character.h
+    character.h \
+    animatedspritenode.h \
+    animationtable.h
