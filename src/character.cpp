@@ -75,7 +75,13 @@ bool Character::isMoveAccepted(sf::Vector2f velocity, sf::Time dt)
     position.x += velocity.x * dt.asSeconds();
     position.y += velocity.y * dt.asSeconds();
 
-    if(mTileMap->checkCollisions(sf::FloatRect(sf::Vector2f(position.x-getBoundingRect().width/2, position.y-getBoundingRect().height/2), sf::Vector2f(getBoundingRect().width, getBoundingRect().height))))
+    sf::FloatRect rect;
+    rect.left = position.x - getBoundingRect().width / 2;
+    rect.top = position.y - getBoundingRect().height / 2;
+    rect.width = getBoundingRect().width;
+    rect.height = getBoundingRect().height;
+
+    if(mTileMap->checkCollisions(rect))
     {
         return false;
     }
@@ -97,11 +103,11 @@ void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
 {
     if(getVelocity().x == 0 && getVelocity().y == 0)
     {
-        mSprite.setState(0);
+        mSprite.setState(PlayerAnimations::Idle);
     }
     else if(!(getVelocity().x == 0) || !(getVelocity().y == 0))
     {
-        mSprite.setState(1);
+        mSprite.setState(PlayerAnimations::Walk);
 
         if(getVelocity().x > 0)
         {
