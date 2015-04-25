@@ -1,5 +1,5 @@
 #include "settingsstate.h"
-#include "utility.h"
+#include "../engine/utility.h"
 #include "engine/resourceholder.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>

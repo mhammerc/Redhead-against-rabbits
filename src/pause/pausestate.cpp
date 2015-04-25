@@ -1,6 +1,6 @@
 #include "pausestate.h"
 #include "engine/gui/button.h"
-#include "utility.h"
+#include "../engine/utility.h"
 #include "engine/resourceholder.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>

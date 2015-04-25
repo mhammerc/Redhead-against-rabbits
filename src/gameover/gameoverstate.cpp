@@ -1,6 +1,6 @@
 #include "gameoverstate.h"
-#include "utility.h"
-#include "player.h"
+#include "../engine/utility.h"
+#include "../game/player.h"
 #include "engine/resourceholder.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>

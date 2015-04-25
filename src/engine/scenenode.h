@@ -9,7 +9,7 @@
 #include <set>
 #include <utility>
 
-#include "category.h"
+#include "../game/category.h"
 
 struct Command;
 class CommandQueue;

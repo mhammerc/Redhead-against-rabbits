@@ -8,33 +8,33 @@ SOURCES += main.cpp \
     engine/scenenode.cpp \
     engine/spritenode.cpp \
     engine/entity.cpp \
-    world.cpp \
     engine/command.cpp \
     engine/commandqueue.cpp \
-    player.cpp \
-    application.cpp \
-    gamestate.cpp \
-    loadingstate.cpp \
-    menustate.cpp \
     engine/paralleltask.cpp \
-    pausestate.cpp \
     engine/state.cpp \
     engine/statestack.cpp \
-    titlestate.cpp \
     engine/utility.cpp \
     engine/gui/button.cpp \
     engine/gui/component.cpp \
     engine/gui/container.cpp \
     engine/gui/label.cpp \
-    settingsstate.cpp \
-    datatables.cpp \
-    gameoverstate.cpp \
     engine/textnode.cpp \
-    tilemapnode.cpp \
-    character.cpp \
-    level_datatables.cpp \
     engine/animatedspritenode.cpp \
-    animationtable.cpp
+    title/titlestate.cpp \
+    game/animationtable.cpp \
+    game/character.cpp \
+    game/datatables.cpp \
+    game/gamestate.cpp \
+    game/level_datatables.cpp \
+    game/player.cpp \
+    game/tilemapnode.cpp \
+    game/world.cpp \
+    gameover/gameoverstate.cpp \
+    loading/loadingstate.cpp \
+    menu/menustate.cpp \
+    pause/pausestate.cpp \
+    settings/settingsstate.cpp \
+    application.cpp
 
 LIBS += -L"/home/imote/Development/SFML-build/lib"
 
@@ -47,35 +47,35 @@ DEPENDPATH += "/home/imote/Development/SFML/include"
 HEADERS += \
     engine/resourceholder.h \
     engine/resourceholder.inl \
-    resourceidentifiers.h \
     engine/scenenode.h \
     engine/spritenode.h \
     engine/entity.h \
-    world.h \
-    category.h \
     engine/command.h \
     engine/commandqueue.h \
-    player.h \
-    application.h \
-    gamestate.h \
-    loadingstate.h \
-    menustate.h \
     engine/paralleltask.h \
-    pausestate.h \
     engine/state.h \
-    stateidentifiers.h \
     engine/statestack.h \
-    titlestate.h \
     engine/utility.h \
     engine/gui/button.h \
     engine/gui/component.h \
     engine/gui/container.h \
     engine/gui/label.h \
-    settingsstate.h \
-    datatables.h \
-    gameoverstate.h \
     engine/textnode.h \
-    tilemapnode.h \
-    character.h \
     engine/animatedspritenode.h \
-    animationtable.h
+    game/animationtable.h \
+    game/category.h \
+    game/character.h \
+    game/datatables.h \
+    game/gamestate.h \
+    game/player.h \
+    game/tilemapnode.h \
+    game/world.h \
+    gameover/gameoverstate.h \
+    loading/loadingstate.h \
+    menu/menustate.h \
+    pause/pausestate.h \
+    title/titlestate.h \
+    stateidentifiers.h \
+    resourceidentifiers.h \
+    settings/settingsstate.h \
+    application.h

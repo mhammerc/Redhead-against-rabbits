@@ -2,12 +2,12 @@
 #include "engine/utility.h"
 #include "engine/state.h"
 #include "stateidentifiers.h"
-#include "titlestate.h"
-#include "gamestate.h"
-#include "menustate.h"
-#include "pausestate.h"
-#include "settingsstate.h"
-#include "gameoverstate.h"
+#include "title/titlestate.h"
+#include "game/gamestate.h"
+#include "menu/menustate.h"
+#include "pause/pausestate.h"
+#include "settings/settingsstate.h"
+#include "gameover/gameoverstate.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.f/60.f);
 

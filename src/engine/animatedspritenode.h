@@ -2,7 +2,7 @@
 #define ANIMATEDSPRITENODE_H
 
 #include "spritenode.h"
-#include "animationtable.h"
+#include "../game/animationtable.h"
 #include "utility.h"
 
 class AnimatedSpriteNode : public SpriteNode

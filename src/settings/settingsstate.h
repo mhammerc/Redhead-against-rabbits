@@ -2,7 +2,7 @@
 #define SETTINGSSTATE_H
 
 #include "engine/state.h"
-#include "player.h"
+#include "../game/player.h"
 #include "engine/gui/container.h"
 #include "engine/gui/button.h"
 #include "engine/gui/label.h"

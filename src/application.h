@@ -3,7 +3,7 @@
 
 #include "engine/resourceholder.h"
 #include "resourceidentifiers.h"
-#include "player.h"
+#include "game/player.h"
 #include "engine/statestack.h"
 
 #include <SFML/System/Time.hpp>
