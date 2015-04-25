@@ -60,6 +60,7 @@ void World::loadTextures()
 {
     mTextures.load(Textures::Tileset, "Media/Textures/tileset_light.png");
     mTextures.load(Textures::PlayerCharacter, "Media/Textures/Buster.png");
+    mTextures.load(Textures::NeutralCharacter, "Media/Textures/npc.png");
 }
 
 bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Category::Type type2)
@@ -67,7 +68,7 @@ bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Categor
     unsigned int category1 = colliders.first->getCategory();
     unsigned int category2 = colliders.second->getCategory();
 
-    // Make sure first pair entry has category type261 and second has type2
+    // Make sure first pair entry has category type1 and second has type2
     if (type1 & category1 && type2 & category2)
     {
         return true;
@@ -85,52 +86,20 @@ bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Categor
 
 void World::handleCollisions()
 {
-   /*if(mTileMap->checkCollisions(mPlayerCharacter->getBoundingRect()))
-    {
-        mPlayerCharacter->backToPreviousPosition();
-        mPlayerCharacter->denyMove();
-    }
-    else
-    {
-        mPlayerCharacter->agreeMove();
-    }*/
-
-    /*std::set<SceneNode::Pair> collisionPairs;
+    std::set<SceneNode::Pair> collisionPairs;
     mSceneGraph.checkSceneCollision(mSceneGraph, collisionPairs);
 
     for(SceneNode::Pair pair : collisionPairs)
     {
-        if (matchesCategories(pair, Category::PlayerAircraft, Category::EnemyAircraft))
+        if (matchesCategories(pair, Category::PlayerCharacter, Category::NeutralCharacter))
         {
-            auto& player = static_cast<Aircraft&>(*pair.first);
-            auto& enemy = static_cast<Aircraft&>(*pair.second);
+            auto& player = static_cast<Character&>(*pair.first);
+            auto& npc = static_cast<Character&>(*pair.second);
 
-            // Collision: Player damage = enemy's remaining HP
-            player.damage(enemy.getHitpoints());
-            enemy.destroy();
+            // Collision: freeze the npc
+            npc.pausePath();
         }
-
-        else if (matchesCategories(pair, Category::PlayerAircraft, Category::Pickup))
-        {
-            auto& player = static_cast<Aircraft&>(*pair.first);
-            auto& pickup = static_cast<Pickup&>(*pair.second);
-
-            // Apply pickup effect to player, destroy projectile
-            pickup.apply(player);
-            pickup.destroy();
-        }
-
-        else if (matchesCategories(pair, Category::EnemyAircraft, Category::AlliedProjectile)
-              || matchesCategories(pair, Category::PlayerAircraft, Category::EnemyProjectile))
-        {
-            auto& aircraft = static_cast<Aircraft&>(*pair.first);
-            auto& projectile = static_cast<Projectile&>(*pair.second);
-
-            // Apply projectile damage to aircraft, destroy projectile
-            aircraft.damage(projectile.getDamage());
-            projectile.destroy();
-        }
-    }*/
+    }
 }
 
 void World::buildScene()
@@ -147,18 +116,18 @@ void World::buildScene()
     }
 
     // Add the tile map
-    std::unique_ptr<TileMapNode> tileMap(new TileMapNode(mTextures));
+    std::unique_ptr<TileMapNode> tileMap(new TileMapNode(mTextures, mFonts));
     mTileMap = tileMap.get();
     mTileMap->setPosition(0, 0);
     mTileMap->completeLoad(TileMapNode::Rabbits);
-    mSceneLayers[Background]->attachChild(std::move(tileMap));
+    mSceneLayers[Air]->attachChild(std::move(tileMap));
 
     // Add the player
     std::unique_ptr<Character> player(new Character(Character::Player, mTextures, mFonts, mTileMap));
     mPlayerCharacter = player.get();
     mPlayerCharacter->scale(0.8, 0.8);
     mPlayerCharacter->setPosition(64, 64);
-    mSceneLayers[Air]->attachChild(std::move(player));
+    mTileMap->attachChild(std::move(player));
 
     // Set the view
     mWorldView.zoom(0.6);

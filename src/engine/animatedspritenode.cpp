@@ -29,7 +29,7 @@ void AnimatedSpriteNode::nextTick(sf::Time dt)
 
 sf::FloatRect AnimatedSpriteNode::getBoundingRect() const
 {
-    return mSprite.getLocalBounds();
+    return mSprite.getGlobalBounds();
 }
 
 void AnimatedSpriteNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const

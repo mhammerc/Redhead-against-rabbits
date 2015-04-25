@@ -150,6 +150,7 @@ void SceneNode::removeWrecks()
 sf::FloatRect SceneNode::getBoundingRect() const
 {
     return sf::FloatRect();
+
 }
 
 bool SceneNode::isMarkedForRemoval() const

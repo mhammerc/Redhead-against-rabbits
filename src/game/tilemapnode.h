@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <functional>
 
 class TileMapNode : public SceneNode
 {
@@ -21,7 +22,7 @@ public:
     };
 
 public:
-    TileMapNode(const TextureHolder& textures);
+    TileMapNode(const TextureHolder& textures, const FontHolder& fonts);
     ~TileMapNode();
 
     void setTexture(const TextureHolder& textures);
@@ -37,18 +38,18 @@ private:
 
 private:
     const TextureHolder& mTextures;
+    const FontHolder& mFonts;
 
     std::vector<sf::VertexArray> mVerticesArray;
 
     sf::Texture mTileset;
 
     sf::Vector2u mTileSize;
-    unsigned int mWidth;
-    unsigned int mHeight;
+    sf::Vector2u mMapSize;
 
     const int* mCollisions;
 
-     std::vector<LevelData> mData;
+    std::vector<LevelData> mData;
 
 };
 

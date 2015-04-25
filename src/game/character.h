@@ -8,7 +8,9 @@
 
 #include "tilemapnode.h"
 #include "engine/animatedspritenode.h"
+
 #include "animationtable.h"
+#include "pathtable.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -31,7 +33,7 @@ public:
     Character(Type type, const TextureHolder& textures, const FontHolder& fonts, TileMapNode* tileMap);
 
     virtual unsigned int getCategory() const;
-    virtual sf::FloatRect getBoundingRect();
+    virtual sf::FloatRect getBoundingRect() const;
     virtual bool isMarkedForRemoval() const;
 
     bool isAllied() const;
@@ -45,14 +47,23 @@ public:
 
     void backToPreviousPosition();
 
+    void pausePath();
+    void unpausePath();
+
 private:
     virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
+
+    void nextPathTick(sf::Time dt, PathType pathType);
 
 private:
     Type mType;
     AnimatedSpriteNode mSprite;
     bool mIsMarkedForRemoval;
+
+    const std::vector<Path> mPathData;
+    sf::Time mElapsedTimePath;
+    bool mIsPathPaused;
 
     sf::Vector2f mPreviousPosition;
 

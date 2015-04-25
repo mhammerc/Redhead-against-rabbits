@@ -23,6 +23,8 @@ public:
     void agreeMove();
     void denyMove();
 
+    void denyNextMove();
+
 protected:
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 
@@ -31,6 +33,7 @@ private:
     int mHitpoints;
 
     bool isMoveRefused;
+    bool isDenyingNextMove;
 
 };
 

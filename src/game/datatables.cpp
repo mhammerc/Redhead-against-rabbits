@@ -3,7 +3,6 @@
 #include "character.h"
 #include "tilemapnode.h"
 
-
 std::vector<CharacterData> initializeCharacterData()
 {
     std::vector<CharacterData> data(Character::TypeCount);
@@ -103,6 +102,15 @@ std::vector<LevelData> initializeLevelData()
     data[TileMapNode::Rabbits].tileSize = sf::Vector2u(32, 32);
     data[TileMapNode::Rabbits].levelSize = sf::Vector2f(32, 18);
     data[TileMapNode::Rabbits].texture = Textures::Tileset;
+
+    std::function<void(TileMapNode*, const TextureHolder&, const FontHolder&)> element = [](TileMapNode* map, const TextureHolder& mTextures, const FontHolder& fonts)
+    {
+        std::unique_ptr<Character> character(new Character(Character::Neutral, mTextures, fonts, map));
+        character->setPosition(390, 328);
+        map->attachChild(std::move(character));
+    };
+
+    data[TileMapNode::Rabbits].elements.push_back(element);
 
     return data;
 }

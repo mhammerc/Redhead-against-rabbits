@@ -17,6 +17,7 @@ Character::Character(Type type, const TextureHolder& textures, const FontHolder&
     mType(type),
     mSprite(textures.getConst(Table[type].texture), initializeAnimationData(Table[type].texture)),
     mIsMarkedForRemoval(false),
+    mPathData(initializePathData()),
     mPreviousPosition(0, 0),
     mTileMap(tileMap)
 {
@@ -34,7 +35,7 @@ unsigned int Character::getCategory() const
         return Category::PlayerCharacter;
 }
 
-sf::FloatRect Character::getBoundingRect()
+sf::FloatRect Character::getBoundingRect() const
 {
     return getWorldTransform().transformRect(mSprite.getBoundingRect());
 }
@@ -94,6 +95,16 @@ void Character::backToPreviousPosition()
     setPosition(mPreviousPosition);
 }
 
+void Character::pausePath()
+{
+    mIsPathPaused = true;
+}
+
+void Character::unpausePath()
+{
+    mIsPathPaused = false;
+}
+
 void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(mSprite, states);
@@ -101,6 +112,16 @@ void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) c
 
 void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
 {
+    if(isNeutral() && !mIsPathPaused)
+    {
+        nextPathTick(dt, PathType::HorizontalShortBackAndForth);
+    }
+
+    if(mIsPathPaused)
+    {
+        unpausePath();
+    }
+
     if(getVelocity().x == 0 && getVelocity().y == 0)
     {
         mSprite.setState(PlayerAnimations::Idle);
@@ -124,4 +145,29 @@ void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
     mPreviousPosition = this->getPosition();
 
     Entity::updateCurrent(dt, commands);
+
+    setVelocity(0, 0);
+}
+
+void Character::nextPathTick(sf::Time dt, PathType pathType)
+{
+    mElapsedTimePath += dt;
+
+    if(mElapsedTimePath.asMilliseconds() > mPathData[pathType].totalDuration)
+    {
+        mElapsedTimePath -= sf::milliseconds(mPathData[pathType].totalDuration);
+    }
+
+    int x = 0;
+
+    for(; mPathData[pathType].path.size() > x && mElapsedTimePath.asMilliseconds() > mPathData[pathType].path[x].totalDuration; ++x);
+
+    sf::Vector2f pathVector = mPathData[pathType].path[x].vector;
+    unsigned int pathDuration = mPathData[pathType].path[x].duration;
+
+    sf::Vector2f vector;
+    vector.x = pathVector.x / pathDuration * dt.asMilliseconds();
+    vector.y = pathVector.y / pathDuration * dt.asMilliseconds();
+
+    setVelocity(vector);
 }

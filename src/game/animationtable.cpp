@@ -17,4 +17,16 @@ Animation initializeAnimationData(Textures::ID texture)
 
         return a;
     }
+
+    else if(texture == Textures::NeutralCharacter)
+    {
+        Animation a;
+        a.interval = 500u;
+        a.textureRect[Idle].push_back(sf::IntRect(0, 0, 32, 32));
+
+        a.textureRect[Walk].push_back(sf::IntRect(0, 0, 32, 32));
+        a.textureRect[Walk].push_back(sf::IntRect(128, 0, 32, 32));
+
+        return a;
+    }
 }

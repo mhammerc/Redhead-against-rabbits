@@ -8,6 +8,7 @@
 #include <memory>
 #include <set>
 #include <utility>
+#include <iostream>
 
 #include "../game/category.h"
 

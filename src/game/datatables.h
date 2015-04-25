@@ -9,6 +9,9 @@
 
 #include <vector>
 #include <functional>
+#include <memory>
+
+class TileMapNode;
 
 struct Direction
 {
@@ -41,6 +44,7 @@ struct LevelData
     sf::Vector2u tileSize;
     sf::Vector2f levelSize;
     Textures::ID texture;
+    std::vector<std::function<void(TileMapNode*, const TextureHolder&, const FontHolder&)>> elements;
 };
 
 std::vector<LevelData> initializeLevelData();

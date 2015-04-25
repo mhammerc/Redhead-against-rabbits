@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     menu/menustate.cpp \
     pause/pausestate.cpp \
     settings/settingsstate.cpp \
-    application.cpp
+    application.cpp \
+    game/pathtable.cpp
 
 LIBS += -L"/home/imote/Development/SFML-build/lib"
 
@@ -78,4 +79,5 @@ HEADERS += \
     stateidentifiers.h \
     resourceidentifiers.h \
     settings/settingsstate.h \
-    application.h
+    application.h \
+    game/pathtable.h
