@@ -1,9 +1,9 @@
 #include "character.h"
 
-#include "utility.h"
+#include "engine/utility.h"
 #include "datatables.h"
-#include "commandqueue.h"
-#include "resourceholder.h"
+#include "engine/commandqueue.h"
+#include "engine/resourceholder.h"
 
 #include <cmath>
 

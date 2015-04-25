@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "scenenode.h"
-#include "resourceholder.h"
+#include "engine/scenenode.h"
+#include "engine/resourceholder.h"
 #include "resourceidentifiers.h"
 #include "datatables.h"
 

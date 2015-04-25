@@ -1,5 +1,5 @@
 #include "player.h"
-#include "commandqueue.h"
+#include "engine/commandqueue.h"
 #include "character.h"
 
 #include <map>

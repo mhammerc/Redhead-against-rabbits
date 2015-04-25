@@ -1,10 +1,10 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "resourceholder.h"
+#include "engine/resourceholder.h"
 #include "resourceidentifiers.h"
 #include "player.h"
-#include "statestack.h"
+#include "engine/statestack.h"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

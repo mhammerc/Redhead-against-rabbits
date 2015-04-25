@@ -1,6 +1,6 @@
 #include "application.h"
-#include "utility.h"
-#include "state.h"
+#include "engine/utility.h"
+#include "engine/state.h"
 #include "stateidentifiers.h"
 #include "titlestate.h"
 #include "gamestate.h"

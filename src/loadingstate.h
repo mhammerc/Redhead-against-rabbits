@@ -4,8 +4,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include "state.h"
-#include "paralleltask.h"
+#include "engine/state.h"
+#include "engine/paralleltask.h"
 
 class LoadingState : public State
 {

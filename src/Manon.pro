@@ -5,86 +5,77 @@ CONFIG -= qt
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    scenenode.cpp \
-    spritenode.cpp \
-    entity.cpp \
-    aircraft.cpp \
+    engine/scenenode.cpp \
+    engine/spritenode.cpp \
+    engine/entity.cpp \
     world.cpp \
-    command.cpp \
-    commandqueue.cpp \
+    engine/command.cpp \
+    engine/commandqueue.cpp \
     player.cpp \
     application.cpp \
     gamestate.cpp \
     loadingstate.cpp \
     menustate.cpp \
-    paralleltask.cpp \
+    engine/paralleltask.cpp \
     pausestate.cpp \
-    state.cpp \
-    statestack.cpp \
+    engine/state.cpp \
+    engine/statestack.cpp \
     titlestate.cpp \
-    utility.cpp \
-    button.cpp \
-    component.cpp \
-    container.cpp \
-    label.cpp \
+    engine/utility.cpp \
+    engine/gui/button.cpp \
+    engine/gui/component.cpp \
+    engine/gui/container.cpp \
+    engine/gui/label.cpp \
     settingsstate.cpp \
     datatables.cpp \
     gameoverstate.cpp \
-    pickup.cpp \
-    projectile.cpp \
-    textnode.cpp \
+    engine/textnode.cpp \
     tilemapnode.cpp \
     character.cpp \
     level_datatables.cpp \
-    animatedspritenode.cpp \
+    engine/animatedspritenode.cpp \
     animationtable.cpp
 
-LIBS += -L"/home/imote/Development/SFML-2.2/lib"
+LIBS += -L"/home/imote/Development/SFML-build/lib"
 
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+CONFIG(debug, debug|release): LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
 
-INCLUDEPATH += "/home/imote/Development/SFML-2.2/include"
-DEPENDPATH += "/home/imote/Development/SFML-2.2/include"
-
-include(deployment.pri)
-qtcAddDeployment()
+INCLUDEPATH += "/home/imote/Development/SFML/include"
+DEPENDPATH += "/home/imote/Development/SFML/include"
 
 HEADERS += \
-    resourceholder.h \
-    resourceholder.inl \
+    engine/resourceholder.h \
+    engine/resourceholder.inl \
     resourceidentifiers.h \
-    scenenode.h \
-    spritenode.h \
-    entity.h \
-    aircraft.h \
+    engine/scenenode.h \
+    engine/spritenode.h \
+    engine/entity.h \
     world.h \
     category.h \
-    command.h \
-    commandqueue.h \
+    engine/command.h \
+    engine/commandqueue.h \
     player.h \
     application.h \
     gamestate.h \
     loadingstate.h \
     menustate.h \
-    paralleltask.h \
+    engine/paralleltask.h \
     pausestate.h \
-    state.h \
+    engine/state.h \
     stateidentifiers.h \
-    statestack.h \
+    engine/statestack.h \
     titlestate.h \
-    utility.h \
-    button.h \
-    component.h \
-    container.h \
-    label.h \
+    engine/utility.h \
+    engine/gui/button.h \
+    engine/gui/component.h \
+    engine/gui/container.h \
+    engine/gui/label.h \
     settingsstate.h \
     datatables.h \
     gameoverstate.h \
-    pickup.h \
-    projectile.h \
-    textnode.h \
+    engine/textnode.h \
     tilemapnode.h \
     character.h \
-    animatedspritenode.h \
+    engine/animatedspritenode.h \
     animationtable.h

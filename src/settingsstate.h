@@ -1,11 +1,11 @@
 #ifndef SETTINGSSTATE_H
 #define SETTINGSSTATE_H
 
-#include "state.h"
+#include "engine/state.h"
 #include "player.h"
-#include "container.h"
-#include "button.h"
-#include "label.h"
+#include "engine/gui/container.h"
+#include "engine/gui/button.h"
+#include "engine/gui/label.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>

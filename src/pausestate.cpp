@@ -1,7 +1,7 @@
 #include "pausestate.h"
-#include "button.h"
+#include "engine/gui/button.h"
 #include "utility.h"
-#include "resourceholder.h"
+#include "engine/resourceholder.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

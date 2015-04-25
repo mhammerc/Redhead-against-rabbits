@@ -3,7 +3,7 @@
 
 #include "component.h"
 #include "resourceidentifiers.h"
-#include "resourceholder.h"
+#include "../resourceholder.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>

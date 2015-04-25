@@ -1,8 +1,8 @@
 #ifndef GAMEOVERSTATE_H
 #define GAMEOVERSTATE_H
 
-#include "state.h"
-#include "container.h"
+#include "engine/state.h"
+#include "engine/gui/container.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>

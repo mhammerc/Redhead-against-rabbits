@@ -1,7 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "state.h"
+#include "engine/state.h"
 #include "world.h"
 #include "player.h"
 

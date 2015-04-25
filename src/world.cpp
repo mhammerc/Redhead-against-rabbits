@@ -1,5 +1,5 @@
 #include "world.h"
-#include "textnode.h"
+#include "engine/textnode.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

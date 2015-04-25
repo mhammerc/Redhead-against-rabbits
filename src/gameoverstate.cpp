@@ -1,7 +1,7 @@
 #include "gameoverstate.h"
 #include "utility.h"
 #include "player.h"
-#include "resourceholder.h"
+#include "engine/resourceholder.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

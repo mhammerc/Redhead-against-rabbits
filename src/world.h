@@ -1,12 +1,12 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "resourceholder.h"
+#include "engine/resourceholder.h"
 #include "resourceidentifiers.h"
-#include "scenenode.h"
-#include "spritenode.h"
-#include "commandqueue.h"
-#include "command.h"
+#include "engine/scenenode.h"
+#include "engine/spritenode.h"
+#include "engine/commandqueue.h"
+#include "engine/command.h"
 #include "tilemapnode.h"
 
 #include "level_datatables.cpp"

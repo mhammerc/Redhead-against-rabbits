@@ -1,13 +1,13 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "entity.h"
+#include "engine/entity.h"
 #include "resourceidentifiers.h"
-#include "command.h"
-#include "commandqueue.h"
+#include "engine/command.h"
+#include "engine/commandqueue.h"
 
 #include "tilemapnode.h"
-#include "animatedspritenode.h"
+#include "engine/animatedspritenode.h"
 #include "animationtable.h"
 
 #include <SFML/Graphics.hpp>
