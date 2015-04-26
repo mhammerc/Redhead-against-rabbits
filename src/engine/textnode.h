@@ -11,11 +11,11 @@
 class TextNode : public SceneNode
 {
 public:
-    explicit TextNode(const FontHolder& fonts, const std::string& text);
+    explicit TextNode(const FontHolder& fonts, const std::string& text, unsigned int size = 20);
 
     void setString(const std::string& text);
 
-private:
+protected:
     virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:

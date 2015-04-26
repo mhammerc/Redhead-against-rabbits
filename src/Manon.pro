@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     pause/pausestate.cpp \
     settings/settingsstate.cpp \
     application.cpp \
-    game/pathtable.cpp
+    game/pathtable.cpp \
+    engine/speakingbubblenode.cpp
 
 LIBS += -L"/home/imote/Development/SFML-build/lib"
 
@@ -80,4 +81,5 @@ HEADERS += \
     resourceidentifiers.h \
     settings/settingsstate.h \
     application.h \
-    game/pathtable.h
+    game/pathtable.h \
+    engine/speakingbubblenode.h

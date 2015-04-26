@@ -10,12 +10,14 @@ namespace sf
 {
     class Sprite;
     class Text;
+    class Shape;
 }
 
 std::string toString(sf::Keyboard::Key key);
 
 void centerOrigin(sf::Sprite& sprite);
 void centerOrigin(sf::Text& text);
+void centerOrigin(sf::Shape& shape);
 
 float toDegree(float radian);
 float toRadian(float degree);

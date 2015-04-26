@@ -98,6 +98,8 @@ void World::handleCollisions()
 
             // Collision: freeze the npc
             npc.pausePath();
+            std::string text = "Bonjour";
+            npc.speak(text, sf::seconds(3));
         }
     }
 }

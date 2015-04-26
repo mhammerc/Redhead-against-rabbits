@@ -14,13 +14,17 @@ namespace
 
 Character::Character(Type type, const TextureHolder& textures, const FontHolder& fonts, TileMapNode* tileMap) :
     Entity(Table[type].hitpoints),
+    mTextures(textures),
+    mFonts(fonts),
     mType(type),
     mSprite(textures.getConst(Table[type].texture), initializeAnimationData(Table[type].texture)),
     mIsMarkedForRemoval(false),
     mPathData(initializePathData()),
     mPreviousPosition(0, 0),
-    mTileMap(tileMap)
+    mTileMap(tileMap),
+    mSpeakingNode(nullptr)
 {
+
 }
 
 unsigned int Character::getCategory() const
@@ -105,6 +109,19 @@ void Character::unpausePath()
     mIsPathPaused = false;
 }
 
+void Character::speak(std::string &text, sf::Time countdown)
+{
+    if(mSpeakingNode)
+        return;
+
+    mSpeakingCountdown = countdown;
+
+    std::unique_ptr<SpeakingBubbleNode> speaking(new SpeakingBubbleNode(text, mTextures, mFonts));
+    mSpeakingNode = speaking.get();
+    mSpeakingNode->setPosition(0, -30);
+    attachChild(std::move(speaking));
+}
+
 void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(mSprite, states);
@@ -112,6 +129,8 @@ void Character::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) c
 
 void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
 {
+    verifySpeakingBubble(dt);
+
     if(isNeutral() && !mIsPathPaused)
     {
         nextPathTick(dt, PathType::HorizontalShortBackAndForth);
@@ -122,23 +141,7 @@ void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
         unpausePath();
     }
 
-    if(getVelocity().x == 0 && getVelocity().y == 0)
-    {
-        mSprite.setState(PlayerAnimations::Idle);
-    }
-    else if(!(getVelocity().x == 0) || !(getVelocity().y == 0))
-    {
-        mSprite.setState(PlayerAnimations::Walk);
-
-        if(getVelocity().x > 0)
-        {
-            mSprite.setScale(1, 1);
-        }
-        else if(getVelocity().x < 0)
-        {
-            mSprite.setScale(-1, 1);
-        }
-    }
+    selectAppropriateAnimation();
 
     mSprite.nextTick(dt);
 
@@ -147,6 +150,27 @@ void Character::updateCurrent(sf::Time dt, CommandQueue &commands)
     Entity::updateCurrent(dt, commands);
 
     setVelocity(0, 0);
+}
+
+void Character::selectAppropriateAnimation()
+{
+    if(!isMoving())
+    {
+        mSprite.setState(CharacterAnimations::Idle);
+    }
+    else if(isMoving())
+    {
+        mSprite.setState(CharacterAnimations::Walk);
+
+        if(isMovingRight())
+        {
+            mSprite.setScale(1, 1);
+        }
+        else if(isMovingLeft())
+        {
+            mSprite.setScale(-1, 1);
+        }
+    }
 }
 
 void Character::nextPathTick(sf::Time dt, PathType pathType)
@@ -170,4 +194,18 @@ void Character::nextPathTick(sf::Time dt, PathType pathType)
     vector.y = pathVector.y / pathDuration * dt.asMilliseconds();
 
     setVelocity(vector);
+}
+
+void Character::verifySpeakingBubble(sf::Time dt)
+{
+    if(!mSpeakingNode)
+        return;
+
+    mSpeakingCountdown -= dt;
+
+    if(mSpeakingCountdown <= sf::Time::Zero)
+    {
+        detachChild(*mSpeakingNode);
+        mSpeakingNode = nullptr;
+    }
 }

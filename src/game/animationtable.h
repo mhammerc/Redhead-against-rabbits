@@ -8,10 +8,14 @@
 
 #include "resourceidentifiers.h"
 
-enum PlayerAnimations
+enum CharacterAnimations
 {
     Idle = 0,
-    Walk
+    Walk,
+    WalkingUp,
+    WalkingDown,
+    WalkingRight,
+    WalkingLeft
 };
 
 struct Animation

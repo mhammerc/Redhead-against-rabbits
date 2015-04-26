@@ -25,6 +25,12 @@ public:
 
     void denyNextMove();
 
+    bool isMoving();
+    bool isMovingLeft();
+    bool isMovingRight();
+    bool isMovingUp();
+    bool isMovingDown();
+
 protected:
     virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 

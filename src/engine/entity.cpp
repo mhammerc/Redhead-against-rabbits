@@ -83,6 +83,31 @@ void Entity::denyNextMove()
     isDenyingNextMove = true;
 }
 
+bool Entity::isMoving()
+{
+    return !(getVelocity().x == 0 && getVelocity().y == 0);
+}
+
+bool Entity::isMovingLeft()
+{
+    return getVelocity().x < 0;
+}
+
+bool Entity::isMovingRight()
+{
+    return getVelocity().x > 0;
+}
+
+bool Entity::isMovingUp()
+{
+    return getVelocity().y < 0;
+}
+
+bool Entity::isMovingDown()
+{
+    return getVelocity().y > 0;
+}
+
 void Entity::updateCurrent(sf::Time dt, CommandQueue&)
 {
     if(!isMoveRefused)
